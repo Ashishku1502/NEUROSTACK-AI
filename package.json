@@ -1,0 +1,13 @@
+{
+  "name": "neurostack-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-Agent RAG Platform (Planner, Retriever, Writer, Critic)",
+  "scripts": {
+    "server": "npm --prefix server start",
+    "server:dev": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "test": "npm --prefix server test"
+  }
+}
