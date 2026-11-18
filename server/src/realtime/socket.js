@@ -5,7 +5,7 @@ const { verify } = require('../utils/jwt');
 const { runPipeline } = require('../services/agents');
 
 const sendSchema = z.object({
-  chatId: z.string().regex(/^[a-f\d]{24}$/i).nullish(),
+  chatId: z.string().regex(/^[a-f\d]{24}$/i).nullish().or(z.literal('')),
   message: z.string().trim().min(1, 'Write a message first').max(4000, 'Message is too long (4000 characters max)'),
 });
 

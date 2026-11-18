@@ -7,10 +7,11 @@ import AssistantTurn from './AssistantTurn.jsx';
 import Composer from './Composer.jsx';
 import { LogoIcon, SparklesIcon, UploadIcon } from './Icons.jsx';
 
-const upsertStep = (trace, step) => {
-  const i = trace.findIndex((t) => t.agent === step.agent);
-  if (i === -1) return [...trace, step];
-  const next = [...trace];
+const upsertStep = (trace = [], step) => {
+  const safe = Array.isArray(trace) ? trace : [];
+  const i = safe.findIndex((t) => t.agent === step.agent);
+  if (i === -1) return [...safe, step];
+  const next = [...safe];
   next[i] = step;
   return next;
 };

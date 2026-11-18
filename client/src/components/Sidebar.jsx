@@ -140,7 +140,7 @@ export default function Sidebar({
                   </div>
                   <span className={`badge badge-${d.status}`}>
                     {d.status === 'ready'
-                      ? `${d.chunkCount} passages · ${fmtSize(d.size)}`
+                      ? `${d.chunkCount || 0} passage${d.chunkCount === 1 ? '' : 's'} · ${fmtSize(d.size)}`
                       : d.status === 'failed'
                       ? 'Failed to process'
                       : 'Indexing…'}
