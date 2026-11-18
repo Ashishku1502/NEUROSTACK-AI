@@ -5,7 +5,7 @@ import Sidebar from './Sidebar.jsx';
 import SourcesPanel from './SourcesPanel.jsx';
 import AssistantTurn from './AssistantTurn.jsx';
 import Composer from './Composer.jsx';
-import { LogoIcon, SparklesIcon, UploadIcon } from './Icons.jsx';
+import { LogoIcon, SparklesIcon } from './Icons.jsx';
 
 const upsertStep = (trace = [], step) => {
   const safe = Array.isArray(trace) ? trace : [];
@@ -51,12 +51,12 @@ export default function Workspace({ user, onLogout }) {
       setActiveId(chatId);
       refreshChats();
     });
-    socket.on('chat:agent', (step) => setLive((l) => l && { ...l, trace: upsertStep(l.trace, step) }));
+    socket.on('chat:agent', (step) => setLive((l) => (l ? { ...l, trace: upsertStep(l.trace, step) } : l)));
     socket.on('chat:sources', ({ sources }) => {
-      setLive((l) => l && { ...l, sources });
+      setLive((l) => (l ? { ...l, sources } : l));
       setFocusSources(sources);
     });
-    socket.on('chat:token', ({ token }) => setLive((l) => l && { ...l, text: l.text + token }));
+    socket.on('chat:token', ({ token }) => setLive((l) => (l ? { ...l, text: l.text + token } : l)));
     socket.on('chat:done', ({ message }) => {
       setMessages((m) => [...m, message]);
       setLive(null);
