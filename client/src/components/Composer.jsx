@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SendIcon, SparklesIcon } from './Icons.jsx';
+import { SendIcon } from './Icons.jsx';
 
 export default function Composer({ onSend, disabled }) {
   const [text, setText] = useState('');

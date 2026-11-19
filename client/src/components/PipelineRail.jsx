@@ -5,7 +5,6 @@ import {
   WriterIcon,
   CriticIcon,
   CheckIcon,
-  ZapIcon,
 } from './Icons.jsx';
 
 const AGENT_ORDER = ['planner', 'retriever', 'writer', 'critic'];

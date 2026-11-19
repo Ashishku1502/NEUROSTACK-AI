@@ -8,7 +8,6 @@ import Composer from './Composer.jsx';
 import {
   LogoIcon,
   SparklesIcon,
-  UploadIcon,
   PlannerIcon,
   RetrieverIcon,
   WriterIcon,
