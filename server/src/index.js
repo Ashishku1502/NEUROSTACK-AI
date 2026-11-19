@@ -20,9 +20,13 @@ async function main() {
 
   const shutdown = async () => {
     try {
+      io.close();
       await disconnectDb();
-    } catch {}
+    } catch (err) {
+      console.error('[shutdown]', err);
+    }
     server.close(() => process.exit(0));
+    setTimeout(() => process.exit(0), 1500).unref();
   };
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);

@@ -31,8 +31,8 @@ export default function Workspace({ user, onLogout }) {
   const socketRef = useRef(null);
   const threadRef = useRef(null);
 
-  const refreshChats = useCallback(() => api.listChats().then(setChats).catch(() => {}), []);
-  const refreshDocs = useCallback(() => api.listDocs().then(setDocs).catch(() => {}), []);
+  const refreshChats = useCallback(() => api.listChats().then(setChats).catch(() => { }), []);
+  const refreshDocs = useCallback(() => api.listDocs().then(setDocs).catch(() => { }), []);
 
   useEffect(() => {
     refreshChats();
@@ -236,7 +236,7 @@ export default function Workspace({ user, onLogout }) {
               live
               message={{ content: live.text, trace: live.trace }}
               onCite={cite}
-              onSelect={() => {}}
+              onSelect={() => { }}
             />
           )}
         </div>
