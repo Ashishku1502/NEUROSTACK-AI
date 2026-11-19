@@ -5,7 +5,8 @@ import Sidebar from './Sidebar.jsx';
 import SourcesPanel from './SourcesPanel.jsx';
 import AssistantTurn from './AssistantTurn.jsx';
 import Composer from './Composer.jsx';
-import { LogoIcon, SparklesIcon } from './Icons.jsx';
+import { LogoIcon, SparklesIcon, UploadIcon } from './Icons.jsx';
+import { SAMPLE_DOC_NAME, SAMPLE_DOC_CONTENT, SAMPLE_PROMPTS } from '../sampleDoc.js';
 
 const upsertStep = (trace = [], step) => {
   const safe = Array.isArray(trace) ? trace : [];
@@ -15,13 +16,6 @@ const upsertStep = (trace = [], step) => {
   next[i] = step;
   return next;
 };
-
-const SUGGESTED_PROMPTS = [
-  { label: 'Summarize Document', prompt: 'Provide a concise executive summary of the uploaded document with key points.' },
-  { label: 'Extract Key Findings', prompt: 'What are the core findings, metrics, and actionable takeaways in this document?' },
-  { label: 'Verify Claims & Policies', prompt: 'What specific requirements or policies are outlined in these documents?' },
-  { label: 'Deep Semantic Q&A', prompt: 'Explain the main concepts and their relationships as described in the text.' },
-];
 
 export default function Workspace({ user, onLogout }) {
   const [chats, setChats] = useState([]);
@@ -122,6 +116,21 @@ export default function Workspace({ user, onLogout }) {
     }
   }
 
+  async function loadSampleDoc() {
+    setUploading(true);
+    setUploadError('');
+    try {
+      const blob = new Blob([SAMPLE_DOC_CONTENT], { type: 'text/markdown' });
+      const file = new File([blob], SAMPLE_DOC_NAME, { type: 'text/markdown' });
+      await api.uploadDoc(file);
+      await refreshDocs();
+    } catch (e) {
+      setUploadError(e.message);
+    } finally {
+      setUploading(false);
+    }
+  }
+
   async function deleteDoc(id) {
     await api.deleteDoc(id).catch((e) => setUploadError(e.message));
     refreshDocs();
@@ -146,6 +155,7 @@ export default function Workspace({ user, onLogout }) {
         onDeleteChat={deleteChat}
         onUpload={upload}
         onDeleteDoc={deleteDoc}
+        onLoadSampleDoc={loadSampleDoc}
         uploading={uploading}
         uploadError={uploadError}
         onLogout={onLogout}
@@ -162,12 +172,12 @@ export default function Workspace({ user, onLogout }) {
               <p>
                 {hasReadyDocs
                   ? 'Ask any question in natural language. Four collaborative AI agents will coordinate to synthesize a verified, cited answer.'
-                  : 'Start by uploading a PDF, TXT, or Markdown document from the knowledge base sidebar. Once indexed into vector chunks, you can ask in-depth questions.'}
+                  : 'Start by uploading a PDF, TXT, or Markdown document from the knowledge base sidebar, or launch our one-click enterprise sample.'}
               </p>
 
-              {hasReadyDocs && (
+              {hasReadyDocs ? (
                 <div className="prompt-suggestions">
-                  {SUGGESTED_PROMPTS.map((p, idx) => (
+                  {SAMPLE_PROMPTS.map((p, idx) => (
                     <button
                       key={idx}
                       className="prompt-pill"
@@ -177,6 +187,35 @@ export default function Workspace({ user, onLogout }) {
                       <span>{p.label}</span>
                     </button>
                   ))}
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginTop: '10px' }}>
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      padding: '12px 26px',
+                      fontSize: '14.5px',
+                      boxShadow: '0 0 25px rgba(99, 102, 241, 0.4)',
+                      borderRadius: '12px',
+                    }}
+                    onClick={loadSampleDoc}
+                    disabled={uploading}
+                  >
+                    {uploading ? (
+                      <>
+                        <div className="spinner" style={{ width: '16px', height: '16px', borderWidth: '2px' }} />
+                        <span>Indexing Enterprise Sample Doc…</span>
+                      </>
+                    ) : (
+                      <>
+                        <SparklesIcon size={18} />
+                        <span>Try Sample Document (10s Instant Demo)</span>
+                      </>
+                    )}
+                  </button>
+                  <span className="muted" style={{ fontSize: '12.5px' }}>
+                    Automatically chunks, embeds, and indexes a sample policy document to test the multi-agent pipeline immediately.
+                  </span>
                 </div>
               )}
             </div>

@@ -8,6 +8,7 @@ import {
   TrashIcon,
   DocIcon,
   LogoutIcon,
+  SparklesIcon,
 } from './Icons.jsx';
 
 const fmtSize = (n = 0) => {
@@ -25,6 +26,7 @@ export default function Sidebar({
   onDeleteChat,
   onUpload,
   onDeleteDoc,
+  onLoadSampleDoc,
   uploading,
   uploadError,
   onLogout,
@@ -104,24 +106,36 @@ export default function Sidebar({
           }}
         />
 
-        <button
-          className="upload-card-btn"
-          disabled={uploading}
-          onClick={() => fileRef.current?.click()}
-          title="Upload PDF, Markdown, or TXT"
-        >
-          {uploading ? (
-            <>
-              <div className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px' }} />
-              <span>Embedding & Chunking…</span>
-            </>
-          ) : (
-            <>
-              <UploadIcon size={16} />
-              <span>Add Document (.pdf, .txt, .md)</span>
-            </>
-          )}
-        </button>
+        <div style={{ display: 'grid', gap: '8px' }}>
+          <button
+            className="upload-card-btn"
+            disabled={uploading}
+            onClick={() => fileRef.current?.click()}
+            title="Upload PDF, Markdown, or TXT"
+          >
+            {uploading ? (
+              <>
+                <div className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px' }} />
+                <span>Embedding & Chunking…</span>
+              </>
+            ) : (
+              <>
+                <UploadIcon size={16} />
+                <span>Add Document (.pdf, .txt, .md)</span>
+              </>
+            )}
+          </button>
+
+          <button
+            className="btn-sample-demo"
+            disabled={uploading}
+            onClick={onLoadSampleDoc}
+            title="Load sample architecture & policy document"
+          >
+            <SparklesIcon size={14} style={{ color: '#818cf8' }} />
+            <span>Try Sample Document (1-Click)</span>
+          </button>
+        </div>
 
         {uploadError && <p className="form-error" role="alert">{uploadError}</p>}
 
