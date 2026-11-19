@@ -10,7 +10,7 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-7.0-47A248?style=flat-square&logo=mongodb)](https://mongodb.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
-[**🎯 Pre-Demo Checklist & Pitch Guide**](PRE_DEMO_AND_PITCH_GUIDE.md) • [**📢 LinkedIn Launch Announcement**](PRE_DEMO_AND_PITCH_GUIDE.md#-4-linkedin-launch-announcement-post) • [**⚡ 1-Click Demo**](#-1-click-instant-demo)
+[**🎯 Pre-Demo Checklist & Pitch Guide**](PRE_DEMO_AND_PITCH_GUIDE.md) • [**📢 LinkedIn Launch Announcement**](PRE_DEMO_AND_PITCH_GUIDE.md#4-linkedin-launch-announcement-post) • [**⚡ 1-Click Demo**](#1-click-instant-demo)
 
 ---
 
